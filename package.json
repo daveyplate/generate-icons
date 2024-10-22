@@ -10,12 +10,12 @@
     "dist"
   ],
   "bin": {
-    "generate-icons": "src/generate-icons"
+    "generate-icons": "src/generate-icons.js"
   },
   "scripts": {
     "build": "npx tsc",
     "prepublishOnly": "npm run build",
-    "generate-icons": "node src/generate-icons"
+    "generate-icons": "node src/generate-icons.js"
   },
   "keywords": [
     "generate",
