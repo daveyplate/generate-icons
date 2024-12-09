@@ -1,6 +1,7 @@
 #!/usr/bin/env ts-node
 
 import fs from 'fs'
+import path from 'path'
 import sharp from 'sharp'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
@@ -26,7 +27,10 @@ const argv = yargs(hideBin(process.argv))
     .argv as Arguments // Specify the arguments type
 
 // Use the provided source file from --source argument
-const sourceFile: string = argv.source || './public/icons/icon-1024.png'
+const sourceFile: string = argv.source
+
+// Get the filename from the source file path
+const sourceFileName = path.basename(sourceFile)
 
 // Define the output sizes and paths
 const sizesAndPaths: SizeAndPath[] = [
@@ -54,7 +58,14 @@ async function generateIcons() {
         for (const item of sizesAndPaths) {
             const { size, path: outputPath } = item
 
-            if (outputPath === sourceFile) continue
+            // Get the filename from the output path
+            const outputFileName = path.basename(outputPath)
+
+            // Skip resizing if the source and output filenames are the same
+            if (outputFileName === sourceFileName) {
+                console.log(`Skipping ${outputPath} since its fileName matches the source fileName.`)
+                continue
+            }
 
             console.log(`Generating ${outputPath}...`)
             await sharp(sourceFile)
