@@ -1,7 +1,7 @@
 {
   "name": "@daveyplate/generate-icons",
   "homepage": "https://github.com/daveyplate/generate-icons",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Generates icons from a source image, including favicon, manifest and apple-touch-icon",
   "main": "dist/index",
   "types": "dist/index",
