@@ -3,19 +3,20 @@
   "homepage": "https://github.com/daveyplate/generate-icons",
   "version": "1.0.4",
   "description": "Generates icons from a source image, including favicon, manifest and apple-touch-icon",
-  "main": "src/generate-icons",
-  "types": "dist/generate-icons",
+  "main": "dist/index",
+  "types": "dist/index",
   "files": [
     "src",
     "dist"
   ],
-  "bin": {
-    "generate-icons": "src/generate-icons.js"
-  },
   "scripts": {
-    "build": "npx tsc",
-    "prepublishOnly": "npm run build",
-    "generate-icons": "node src/generate-icons.js"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "rm -rf dist && npm run build",
+    "generate-icons": "node dist/generate-icons.js"
+  },
+  "bin": {
+    "generate-icons": "dist/generate-icons.js"
   },
   "keywords": [
     "generate",
@@ -24,9 +25,12 @@
     "manifest",
     "apple-touch-icon"
   ],
-  "author": "LeakedDave",
+  "author": "daveycodez",
   "license": "ISC",
   "devDependencies": {
+    "@types/imagemin": "^9.0.0",
+    "@types/node": "^22.10.1",
+    "@types/yargs": "^17.0.33",
     "typescript": "^5.6.2"
   },
   "dependencies": {

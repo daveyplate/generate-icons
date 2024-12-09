@@ -1,9 +1,19 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-const fs = require('fs')
-const sharp = require('sharp')
-const yargs = require('yargs/yargs')
-const { hideBin } = require('yargs/helpers')
+import fs from 'fs'
+import sharp from 'sharp'
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
+
+// Define types for the command line arguments and the sizes and paths
+interface Arguments {
+    source: string
+}
+
+interface SizeAndPath {
+    size: number
+    path: string
+}
 
 // Parse command line arguments
 const argv = yargs(hideBin(process.argv))
@@ -13,13 +23,13 @@ const argv = yargs(hideBin(process.argv))
         type: 'string',
         demandOption: true // Make --source a required argument
     })
-    .argv
+    .argv as Arguments // Specify the arguments type
 
 // Use the provided source file from --source argument
-const sourceFile = argv.source || './public/icons/icon-1024.png'
+const sourceFile: string = argv.source || './public/icons/icon-1024.png'
 
 // Define the output sizes and paths
-const sizesAndPaths = [
+const sizesAndPaths: SizeAndPath[] = [
     { size: 192, path: './public/icons/icon-192.png' },
     { size: 512, path: './public/icons/icon-512.png' },
     { size: 1024, path: './public/icons/icon-1024.png' },
@@ -65,6 +75,7 @@ async function generateIcons() {
             console.log(`Optimizing ${outputPath}...`)
             await imagemin([outputPath], {
                 destination,
+                plugins: []
             })
 
             console.log(`${outputPath} optimized successfully.`)
@@ -87,7 +98,7 @@ async function generateIcons() {
         console.log(`${faviconPath} generated successfully.`)
 
         console.log('All images optimized successfully.')
-    } catch (error) {
+    } catch (error: any) {
         console.error(`Error generating icons: ${error.message}`)
     }
 }
